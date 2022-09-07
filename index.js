@@ -1,11 +1,14 @@
 const { exec } = require("child_process");
+const {stringify} = require('envfile')
+const fs = require('fs')
 const express = require("express");
-const app = express();
 const cors = require("cors");
-const router = express.Router();
-require("dotenv").config({ path: "./config.env" });
+const dotenv = require("dotenv")
 const localtunnel = require("localtunnel");
-const publicSubDomain = `control-pc-power-settings-${process.env.CUSTOM_DOMAIN}`;
+const { parsed: configFile } = dotenv.config({ path: "./config.env" });
+const app = express();
+const router = express.Router();
+const publicSubDomain = `pc-power-settings-${process.env.CUSTOM_DOMAIN}`;
 //expose port
 (async () => {
   const tunnel = await localtunnel({
@@ -16,6 +19,14 @@ const publicSubDomain = `control-pc-power-settings-${process.env.CUSTOM_DOMAIN}`
   // i.e. https://abcdefgjhij.localtunnel.me
   const url = tunnel.url
   console.log(url);
+  //extract all variables
+  const all_config_env = configFile
+
+  //add local tunnel variable from config
+  all_config_env['PUBLIC_CALLBACK_URL'] = url
+  const new_config_data = stringify(all_config_env)
+  //output new config file
+  fs.writeFileSync('./config.env', new_config_data)
   tunnel.on("close", () => {
     // tunnels are closed
   });
@@ -52,12 +63,12 @@ router.route("/").post(async (req, res) => {
       exec("%windir%/System32/shutdown.exe -l", commandErrHandler);
       return;
     case "shutdown":
+      listener.close();
       exec("%windir%/System32/shutdown.exe -s", commandErrHandler);
       return;
     default:
       return;
   }
-  //sleep command
 });
 //listen to port
 app.use("/", router);
