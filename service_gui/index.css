@@ -1,0 +1,157 @@
+body {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  min-height: 100vh;
+  margin: 0;
+}
+
+#forms-container {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+#forms-container button {
+  cursor: pointer;
+}
+
+#new-config-variables,
+#curr-config-variables {
+  height: 100%;
+  width: 45%;
+  padding: 0 2.5%;
+}
+
+#new-config-variables h2,
+#curr-config-variables h2 {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+#new-config-variables input,
+#curr-config-variables input {
+  padding: 0 2%;
+}
+
+#curr-config-variables {
+  border-right: 1px solid darkgray;
+}
+
+#curr-config-variables p {
+  font-size: 13px;
+  color: #535353;
+  font-style: italic;
+}
+
+.input-row {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-bottom: 16px;
+  /* Firefox */
+}
+
+.input-row label {
+  margin-bottom: 8px;
+  -ms-flex-item-align: start;
+      -ms-grid-row-align: start;
+      align-self: start;
+}
+
+.input-row input {
+  margin: 0;
+  height: 32px;
+  width: 100%;
+}
+
+.input-row input::-webkit-outer-spin-button,
+.input-row input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.input-row input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.input-row div {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+}
+
+.password-input-row .input-wrapper {
+  position: relative;
+}
+
+.password-input-row .input-wrapper button {
+  cursor: pointer;
+  top: 0;
+  right: 1%;
+  height: 100%;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  position: absolute;
+}
+
+.password-input-row p {
+  font-size: 12px;
+  color: #5e5e5e;
+}
+
+.submit-btn {
+  height: 32px;
+  width: 100%;
+}
+
+#show-current-password {
+  background-color: transparent;
+  font-size: 10px;
+  border: none;
+  margin: 0;
+  padding: 0;
+  color: #006eff;
+  position: relative;
+}
+
+#show-current-password::after {
+  position: absolute;
+  content: "";
+  bottom: 7px;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background-color: #006eff;
+}
+/*# sourceMappingURL=index.css.map */

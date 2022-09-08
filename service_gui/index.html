@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="index.css" />
+    <title>WebHook PC Power Control</title>
+    <script defer src="render.js"></script>
+    <script
+      defer
+      src="https://kit.fontawesome.com/82baa6d5d5.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <h1>Configure Webhook Power Control</h1>
+    <div id="forms-container">
+      <div id="curr-config-variables" >
+        <h2>Current Config</h2>
+        <div class="input-row port-input-row">
+          <label for="current-port-input">Port Number:</label>
+          <div>
+            <p id="current-port-input"></p>
+          </div>
+        </div>
+        <div class="input-row password-row">
+          <label for="current-password">Password:</label>
+          <div>
+            <p id="current-password"></p>
+            <button
+              id="show-current-password"
+              aria-label="show-password-btn"
+              onclick="showCurrPassword()"
+    
+            >
+              Show Password
+            </button>
+          </div>
+        </div>
+        <div class="input-row custom-sub-domain-row">
+          <label for="current-custom-sub-domain">Custom Sub Domain:</label>
+          <div>
+            <p id="current-custom-sub-domain"></p>
+          </div>
+        </div>
+        <div class="input-row public-callback-url-row">
+          <label for="public-callback-url">Public Callback URL:</label>
+          <div>
+            <p id="public-callback-url"></p>
+          </div>
+        </div>
+      </div>
+
+      <form id="new-config-variables" onsubmit="submitConfig(event)">
+        <h2>New Setup</h2>
+        <div class="input-row port-input-row">
+          <label for="port-input">Port Number</label>
+          <div>
+            <input
+              id="port-input"
+              name="port"
+              type="number"
+              min="1"
+              max="49151"
+              step="1"
+              oninput="validity.valid||(value='');"
+              required
+            />
+          </div>
+        </div>
+        <div class="input-row password-input-row">
+          <label for="password-input">Password</label>
+          <div>
+            <div class="input-wrapper">
+              <button
+                type="button"
+                aria-label="show password"
+                onclick="showPassword()"
+              >
+                <i id="show-password-btn" class="fa-regular fa-eye"></i>
+              </button>
+              <input
+                name="password"
+                id="password-input"
+                type="password"
+                required
+                minlength="1"
+              />
+            </div>
+            <button onclick="generatePassword()" type="button">
+              Generate Password
+            </button>
+          </div>
+        </div>
+        <div class="input-row password-input-row">
+          <label for="custom-sub-domain-input">Sub Domain Name</label>
+          <div>
+            <input
+              id="custom-sub-domain-input"
+              name="custom-sub-domain"
+              type="text"
+              minlength="1"
+            />
+            <button type="button" onclick="generateDomainName()">
+              Generate Name
+            </button>
+          </div>
+          <p>
+            Note: This name is not guaranteed, as it depends on availability. To
+            improve your odds, use the generator.
+          </p>
+        </div>
+        <button class="submit-btn" type="submit">Submit</button>
+      </form>
+    </div>
+  </body>
+</html>
