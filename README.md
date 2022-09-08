@@ -16,8 +16,13 @@ However, if a user just wants log out, shut down or put a machine to sleep, the 
 ## How it works
 This Node.js application runs as a [windows service](https://docs.microsoft.com/en-us/dotnet/framework/windows-services/introduction-to-windows-service-applications) with the help of [`node-windows`](https://www.npmjs.com/package/node-windows). This service launches an [`express`](https://expressjs.com) web server that uses a public callback url supplied by [`localtunnel`](https://github.com/localtunnel/localtunnel), to respond to `POST` requests from anywhere on the web. This allows us to use [webhooks](https://en.wikipedia.org/wiki/Webhook), to initiate a logout, shutdown, or sleep action, by supplying a [valid json payload](#json-payload) in the post method.
 
-## Example Workflow
-![Example Workflow](./window_power_control_sleep_action.png)
+## Example Automation
+#### Helpful Resources for this type of automation: 
+- Create an [IFTTT Applet](https://help.ifttt.com/hc/en-us/articles/115010361348-What-is-an-Applet-)
+- Link [IFTTT and Google Assistant](https://support.google.com/googlenest/answer/7194656?hl=en&co=GENIE.Platform%3DDesktop&oco=1)
+
+![Example Automation](./window_power_control_sleep_action.png)
+
 
 ## Setup
 1. Ensure you satisfy all the [requirements](#prerequisites)
@@ -28,7 +33,9 @@ This Node.js application runs as a [windows service](https://docs.microsoft.com/
 
 ## Installation
 
-Run `npm run service:install` in your terminal, to install the windows service worker
+1. Run `npm run service:install` in your terminal, to install the windows service worker
+
+2. Open your `config.env` file again. The `PUBLIC_CALLBACK_URL` value is the url you should make post requests to. 
 
 ## Environment Variables
   - `PORT`: `number` (**required**)
@@ -43,10 +50,13 @@ Run `npm run service:install` in your terminal, to install the windows service w
   - `CUSTOM_SUB_DOMAIN`: `string` (**optional**)
       
       This allows the user to define an optional subdomain name. 
-          1. You are not guarenteed to be given your custom name, as it depends on availability 
-          2. To improve your odds, consider using a [uuid generator](https://www.uuidgenerator.net) for the name
-          3. Your urls will MOST likely take the following form: `https://pc-power-settings-*CUSTOM_SUB_DOMAIN*.loca.lt`
-          4. **Note**: Behind the scenes, this application uses [`localtunnel`](https://github.com/localtunnel/localtunnel) to generate public-facing urls. 
+      - You are not guaranteed to be given your custom name, as it depends on availability 
+
+      - To improve your odds, consider using a [uuid generator](https://www.uuidgenerator.net) for the name
+
+      - Your urls will MOST likely take the following form: `https://pc-power-settings-*CUSTOM_SUB_DOMAIN*.loca.lt`
+
+      - **Note**: Behind the scenes, this application uses [`localtunnel`](https://github.com/localtunnel/localtunnel) to generate public-facing urls. 
 ## JSON Payload
 - `password`: `string` (**required**)
     
