@@ -1,5 +1,5 @@
 ## Prerequisites
-1. Your machine must be run Windows 8+
+1. Your machine must be running Windows 8+
 
 2. You must have `Node.js v16+` installed. 
     - To install, please go [here](https://nodejs.org/dist/v16.17.0/)
