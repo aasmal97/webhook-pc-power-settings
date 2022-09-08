@@ -31,7 +31,7 @@ This Node.js application runs as a [windows service](https://docs.microsoft.com/
 
 2. Install all dependencies by running `npm install` in your terminal
 
-3. Create a `config.env` file, and add the accepted [environment variables](#environment-variables)
+3. Create a `config.env` file in the root of the directory, and add the accepted [environment variables](#environment-variables)
 
 ## Installation
 
