@@ -62,7 +62,7 @@ This Node.js application runs as a [windows service](https://docs.microsoft.com/
 ## JSON Payload
 - `password`: `string` (**required**)
     
-    - This should be the same string you have in your config.env file when you first installed the service.
+    - This should be the same string you have in your [`config.env`](#environment-variables) file when you first installed the service.
 
 - `action`: `sleep | logout | shutdown` (**required**)
     
