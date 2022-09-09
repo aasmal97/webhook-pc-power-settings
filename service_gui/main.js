@@ -22,7 +22,7 @@ const createWindow = () => {
     },
   });
   //html
-  win.loadFile("index.html");
+  win.loadFile(path.join(__dirname,"index.html"));
 };
 
 app.whenReady().then(createWindow);
@@ -87,7 +87,13 @@ ipcMain.on("onLoad", () => {
 });
 ipcMain.on("uninstall", () => {
   serviceUninstall(() => {
-    fs.unlink(configPath, () => app.quit());
+    try {
+      fs.unlinkSync(configPath);
+      app.quit()
+    } catch (e) {
+      console.log("Config file was already deleted")
+      app.quit();
+    }
   });
 });
 ipcMain.on("openFileExplorer", (event, data) => {

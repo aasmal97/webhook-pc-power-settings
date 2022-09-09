@@ -19,7 +19,8 @@
     "start": "node index.js",
     "start:gui": "electron ./service_gui/main.js",
     "service:install": "node ./service_app/service_files/serviceInstall.js",
-    "service:uninstall": "node ./service_app/service_files/serviceUninstall.js"
+    "service:uninstall": "node ./service_app/service_files/serviceUninstall.js",
+    "build:gui": "npm exec electron-packager . --arch x64,x86,x86_64 --out"
   },
   "name": "webhook-pc-power-controls",
   "productName": "Webhook PC Power Controls",
