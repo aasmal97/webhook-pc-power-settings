@@ -1,4 +1,12 @@
 const { ipcRenderer } = require("electron");
+const addFormInputs = (data) => {
+  document.getElementById("curr-config-variables").style = "";
+  document.getElementById("current-port-input").textContent = data.PORT;
+  document.getElementById("public-callback-url").textContent =
+    data.PUBLIC_CALLBACK_URL;
+  document.getElementById("current-custom-sub-domain").textContent =
+    data.CUSTOM_SUB_DOMAIN;
+};
 const generatePassword = () => {
   ipcRenderer.send("generatePassword");
 };
@@ -16,8 +24,40 @@ const submitConfig = (event) => {
 const showCurrPassword = () => {
   ipcRenderer.send("showCurrPassword");
 };
+const onLoad = () => {
+  ipcRenderer.send("onLoad");
+};
+const uninstall = () => {
+  ipcRenderer.send("uninstall");
+};
+const clickLink = (event) => {
+  event.preventDefault();
+  ipcRenderer.send("openFileExplorer", event.target.href)
+}
 ipcRenderer.on("recieveCurrPassword", (event, data) => {
-  document.getElementById("current-password").textContent = data;
+  const el = document.getElementById("current-password");
+  const btn = document.getElementById("show-current-password");
+  if (btn.textContent === "Show Password") {
+    el.textContent = data;
+    btn.textContent = "Hide";
+    const paragraphActive = {
+      "background-color": "rgb(250, 250, 250)",
+      border: "1px solid rgb(129, 129, 129)",
+      padding: "6px",
+      "font-size": "12px",
+      color: "rgb(94, 94, 94)",
+      "border-radius": "5px",
+      "margin-bottom": "5px !important",
+    };
+    const styleProps = Object.entries(paragraphActive).reduce(
+      (a, [key, value]) => `${a};${key}:${value}`
+    );
+    el.style = styleProps;
+  } else {
+    el.style = "";
+    el.textContent = "";
+    btn.textContent = "Show Password";
+  }
 });
 ipcRenderer.on("recievePassword", (event, data) => {
   document.getElementById("password-input").value = data;
@@ -39,9 +79,18 @@ ipcRenderer.on("recieveDomainName", (event, data) => {
   document.getElementById("custom-sub-domain-input").value = data;
 });
 ipcRenderer.on("submitConfigRecieved", (event, data) => {
-  document.getElementById("current-port-input").textContent = data.PORT;
-  document.getElementById("public-callback-url").textContent =
-    data.PUBLIC_CALLBACK_URL;
-  document.getElementById("current-custom-sub-domain").textContent =
-    data.CUSTOM_SUB_DOMAIN;
+  addFormInputs(data);
+});
+ipcRenderer.on("onLoad", (event, data) => {
+  if (data.CUSTOM_SUB_DOMAIN && data.PUBLIC_CALLBACK_URL && data.PORT) {
+    //reveal current settings
+    addFormInputs(data);
+  }
+  const uninstallFooter = document.getElementById("uninstall-footnote");
+  //update current directory
+  const link = uninstallFooter.querySelector(
+    "a"
+  )
+  link.textContent = `Directory: '${data.currDirectory}'`;
+  link.href = `file://${data.currDirectory.replaceAll("\\", "/")}`
 });

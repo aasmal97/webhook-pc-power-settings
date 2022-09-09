@@ -1,9 +1,10 @@
-const { app, BrowserWindow, ipcMain } = require("electron");
+const { app, BrowserWindow, ipcMain, shell } = require("electron");
 const generator = require("generate-password");
 const { stringify } = require("envfile");
 const { v4: uuid } = require("uuid");
 const dotenv = require("dotenv");
-const configPath = "../config.env";
+const path = require("path");
+const configPath = path.join(__dirname, "..", "config.env");
 const fs = require("fs/promises");
 const serviceInstall = require("../service_app/service_files/serviceInstall");
 const serviceUninstall = require("../service_app/service_files/serviceUninstall");
@@ -54,14 +55,40 @@ ipcMain.on("submitConfig", async (event, data) => {
     )[0][1],
   };
   //write to config file
-  await fs.writeFile(configPath, stringify(newData));
+  try {
+    await fs.writeFile(configPath, stringify(newData));
+    console.log("Config File Written to User Input");
+  } catch (e) {
+    console.error(e);
+  }
   //uninstall current service
   serviceUninstall(() => {
     //start new service
     serviceInstall(() => {
       //send data to renderer
-      const { parsed: configFile } = dotenv.config({ path: configPath });
-      win.webContents.send("submitConfigRecieved", configFile);
+      //time to start server and modify config
+      const sendEvent = setInterval(() => {
+        const { parsed: configFile } = dotenv.config({ path: configPath });
+        if (configFile.PUBLIC_CALLBACK_URL) {
+          win.webContents.send("submitConfigRecieved", configFile);
+          //stop polling for changes
+          clearInterval(sendEvent);
+        }
+      }, 2000);
     });
   });
+});
+ipcMain.on("onLoad", () => {
+  const { parsed: configFile } = dotenv.config({ path: configPath });
+  win.webContents.send("onLoad", {
+    ...configFile,
+    currDirectory: path.join(__dirname, ".."),
+  });
+});
+ipcMain.on("uninstall", () => {
+  serviceUninstall();
+  app.quit();
+});
+ipcMain.on("openFileExplorer", (event, data) => {
+  shell.openPath(data);
 });

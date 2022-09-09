@@ -13,10 +13,10 @@
       crossorigin="anonymous"
     ></script>
   </head>
-  <body>
+  <body onload="onLoad()">
     <h1>Configure Webhook Power Control</h1>
     <div id="forms-container">
-      <div id="curr-config-variables" >
+      <div id="curr-config-variables" style="display: none">
         <h2>Current Config</h2>
         <div class="input-row port-input-row">
           <label for="current-port-input">Port Number:</label>
@@ -26,13 +26,12 @@
         </div>
         <div class="input-row password-row">
           <label for="current-password">Password:</label>
-          <div>
+          <div style="display: flex; flex-direction: column">
             <p id="current-password"></p>
             <button
               id="show-current-password"
               aria-label="show-password-btn"
               onclick="showCurrPassword()"
-    
             >
               Show Password
             </button>
@@ -93,7 +92,7 @@
             </button>
           </div>
         </div>
-        <div class="input-row password-input-row">
+        <div class="input-row custom-sub-domain-row">
           <label for="custom-sub-domain-input">Sub Domain Name</label>
           <div>
             <input
@@ -113,6 +112,19 @@
         </div>
         <button class="submit-btn" type="submit">Submit</button>
       </form>
+    </div>
+    <div id="uninstall-section">
+      <button id="uninstall-btn" onclick="uninstall()" aria-label="uninstall">
+        Uninstall
+      </button>
+      <div id="uninstall-footnote">
+        <p>
+          Note: This will only remove your user data, all background processes,
+          and the service worker. To completely erase all app files, after
+          clicking this button, delete the following directory manually.
+        </p>
+        <a href="" onclick="clickLink(event)">Directory:</a>
+      </div>
     </div>
   </body>
 </html>

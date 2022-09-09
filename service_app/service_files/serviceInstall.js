@@ -8,10 +8,12 @@ const serviceInstall = (callback = null) => {
     description:
       "Control sleep, logout or shutdown with using a web server to respond to webhooks",
     script: scriptPath,
+    maxRestarts: 1
   });
 
   svc.on("install", function () {
     svc.start();
+    console.log("App install complete")
     if(callback) callback()
   });
 

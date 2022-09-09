@@ -7,7 +7,8 @@ const { v4: uuid } = require("uuid");
 const publicSubDomain = `pc-power-settings-${
   process.env.CUSTOM_SUB_DOMAIN ? process.env.CUSTOM_SUB_DOMAIN : uuid()
 }`;
-const configPath = "../config.env";
+const path = require("path");
+const configPath = path.join(__dirname, "..", "config.env");
 //expose port
 const createLocalTunnel = async () => {
   let tunnel = await localtunnel({
