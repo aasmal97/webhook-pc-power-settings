@@ -16,7 +16,7 @@ This Node.js application runs as a [windows service](https://docs.microsoft.com/
 ![Example Automation](./window_power_control_sleep_action.png)
 ## Installation
 - [Install With GUI(Graphic User Interface)]()
-- [Install Without GUI]("./installWithGui/README.md")
+- [Install Without GUI](./installWithGui/README.md)
 ## Environment Variables
   - `PORT`: `number` (**required**)
   
