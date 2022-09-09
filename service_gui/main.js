@@ -6,8 +6,16 @@ const dotenv = require("dotenv");
 const path = require("path");
 const configPath = path.join(__dirname, "..", "config.env");
 const fs = require("fs/promises");
-const serviceInstall = require("../service_app/service_files/serviceInstall");
-const serviceUninstall = require("../service_app/service_files/serviceUninstall");
+const serviceInstall = require(path.join(
+  __dirname,
+  "..",
+  "service_app/service_files/serviceInstall"
+));
+const serviceUninstall = require(path.join(
+  __dirname,
+  "..",
+  "service_app/service_files/serviceUninstall"
+));
 let win = null;
 const createWindow = () => {
   //create browser window

@@ -1,11 +1,11 @@
 const express = require("express");
 const cors = require("cors");
-const createLocalTunnel = require("./generateLocalTunnel");
-const path = require('path')
-const postRoute = require("./routes/post");
-const app = express();
+const path = require("path");
+const createLocalTunnel = require(path.join(__dirname, "generateLocalTunnel"));
+const postRoute = require(path.join(__dirname, "routes/post"));
 const dotenv = require("dotenv");
 const configPath = path.join(__dirname, "..", "config.env");
+const app = express();
 const startServer = async () => {
   //parses environment variables
   dotenv.config({ path: configPath });

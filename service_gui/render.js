@@ -30,8 +30,8 @@ const uninstall = () => {
 };
 const clickLink = (event) => {
   event.preventDefault();
-  ipcRenderer.send("openFileExplorer", event.target.href)
-}
+  ipcRenderer.send("openFileExplorer", event.target.href);
+};
 ipcRenderer.on("recieveCurrPassword", (event, data) => {
   const el = document.getElementById("current-password");
   const btn = document.getElementById("show-current-password");
@@ -86,9 +86,7 @@ ipcRenderer.on("onLoad", (event, data) => {
   }
   const uninstallFooter = document.getElementById("uninstall-footnote");
   //update current directory
-  const link = uninstallFooter.querySelector(
-    "a"
-  )
+  const link = uninstallFooter.querySelector("a");
   link.textContent = `Directory: '${data.currDirectory}'`;
-  link.href = `file://${data.currDirectory.replaceAll("\\", "/")}`
+  link.href = `file://${data.currDirectory.replaceAll("\\", "/")}`;
 });

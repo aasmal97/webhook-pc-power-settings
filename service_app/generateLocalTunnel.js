@@ -19,7 +19,7 @@ const createLocalTunnel = async () => {
   // i.e. https://abcdefgjhij.localtunnel.me
   let url = tunnel.url;
   //generates a url with a uuid instead
-  const regex = new RegExp(publicSubDomain)
+  const regex = new RegExp(publicSubDomain);
   if (!regex.test(url)) {
     tunnel.close();
     tunnel = await localtunnel({
