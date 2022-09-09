@@ -1,4 +1,4 @@
-#### Install Windows Service w/o GUI
+# Install Windows Service w/o GUI
 ## Prerequisites
 1. Your machine must be running Windows 8+
 
@@ -10,7 +10,7 @@
     - Note: You can attempt to use a newer `Node.js` version, but this may cause bugs to arise.
     
 ## Setup
-1. Ensure you satisfy all the [requirements](../README.md/#prerequisites)
+1. Ensure you satisfy all the [requirements](#prerequisites)
 
 2. Install all dependencies by running `npm install` in your terminal
 
