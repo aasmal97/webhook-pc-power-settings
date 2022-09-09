@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const createLocalTunnel = require("./generateLocalTunnel");
+const path = require('path')
 const postRoute = require("./routes/post");
 const app = express();
 const dotenv = require("dotenv");

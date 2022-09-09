@@ -22,7 +22,7 @@ const createWindow = () => {
     },
   });
   //html
-  win.loadFile(path.join(__dirname,"index.html"));
+  win.loadFile(path.join(__dirname, "index.html"));
 };
 
 app.whenReady().then(createWindow);
@@ -59,7 +59,7 @@ ipcMain.on("submitConfig", async (event, data) => {
     await fs.writeFile(configPath, stringify(newData));
     console.log("Config File Written to User Input");
   } catch (e) {
-    console.error(e);
+    //console.error(e);
   }
   //uninstall current service
   serviceUninstall(() => {
@@ -86,12 +86,12 @@ ipcMain.on("onLoad", () => {
   });
 });
 ipcMain.on("uninstall", () => {
-  serviceUninstall(() => {
+  serviceUninstall(async () => {
     try {
-      fs.unlinkSync(configPath);
-      app.quit()
+      await fs.unlink(configPath);
+      app.quit();
     } catch (e) {
-      console.log("Config file was already deleted")
+      console.log("Config file was already deleted");
       app.quit();
     }
   });
