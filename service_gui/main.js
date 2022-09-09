@@ -59,7 +59,7 @@ ipcMain.on("submitConfig", async (event, data) => {
     await fs.writeFile(configPath, stringify(newData));
     console.log("Config File Written to User Input");
   } catch (e) {
-    //console.error(e);
+    console.error(e);
   }
   //uninstall current service
   serviceUninstall(() => {

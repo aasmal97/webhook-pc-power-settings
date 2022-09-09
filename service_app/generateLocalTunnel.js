@@ -19,7 +19,8 @@ const createLocalTunnel = async () => {
   // i.e. https://abcdefgjhij.localtunnel.me
   let url = tunnel.url;
   //generates a url with a uuid instead
-  if (url !== publicSubDomain) {
+  const regex = new RegExp(publicSubDomain)
+  if (!regex.test(url)) {
     tunnel.close();
     tunnel = await localtunnel({
       port: process.env.PORT ? process.env.PORT : 5000,
