@@ -87,7 +87,7 @@ ipcMain.on("onLoad", () => {
 });
 ipcMain.on("uninstall", () => {
   serviceUninstall(() => {
-    app.quit();
+    fs.unlink(configPath, () => app.quit());
   });
 });
 ipcMain.on("openFileExplorer", (event, data) => {
