@@ -2,13 +2,13 @@ const { stringify } = require("envfile");
 const fs = require("fs/promises");
 const dotenv = require("dotenv");
 const localtunnel = require("localtunnel");
-const { parsed: configFile } = dotenv.config({ path: "../config.env" });
 const { v4: uuid } = require("uuid");
 const publicSubDomain = `pc-power-settings-${
   process.env.CUSTOM_SUB_DOMAIN ? process.env.CUSTOM_SUB_DOMAIN : uuid()
 }`;
 const path = require("path");
 const configPath = path.join(__dirname, "..", "config.env");
+const { parsed: configFile } = dotenv.config({ path: configPath });
 //expose port
 const createLocalTunnel = async () => {
   let tunnel = await localtunnel({

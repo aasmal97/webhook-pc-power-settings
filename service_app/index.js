@@ -4,9 +4,10 @@ const createLocalTunnel = require("./generateLocalTunnel");
 const postRoute = require("./routes/post");
 const app = express();
 const dotenv = require("dotenv");
+const configPath = path.join(__dirname, "..", "config.env");
 const startServer = async () => {
   //parses environment variables
-  dotenv.config({ path: "../config.env" });
+  dotenv.config({ path: configPath });
   //create local tunnel
   await createLocalTunnel();
   //support all orgins
