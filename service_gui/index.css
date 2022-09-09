@@ -185,6 +185,7 @@ body {
 }
 
 #uninstall-btn {
+  cursor: pointer;
   width: 100%;
   border: 1px solid #a90202;
   background-color: #a90202;

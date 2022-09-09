@@ -12,9 +12,9 @@ let win = null;
 const createWindow = () => {
   //create browser window
   win = new BrowserWindow({
-    width: 800,
-    height: 600,
-    resizable: false,
+    width: 900,
+    height: 800,
+    resizable: true,
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false,
@@ -86,8 +86,9 @@ ipcMain.on("onLoad", () => {
   });
 });
 ipcMain.on("uninstall", () => {
-  serviceUninstall();
-  app.quit();
+  serviceUninstall(() => {
+    app.quit();
+  });
 });
 ipcMain.on("openFileExplorer", (event, data) => {
   shell.openPath(data);

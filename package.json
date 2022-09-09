@@ -11,8 +11,8 @@
     "uuid": "=9.0.0"
   },
   "devDependencies": {
-    "electron-package": "=0.1.0",
-    "nodemon": "=2.0.19"
+    "nodemon": "=2.0.19",
+    "electron-packager": "=16.0.0"
   },
   "scripts": {
     "dev": "nodemon index.js",
@@ -21,7 +21,8 @@
     "service:install": "node ./service_app/service_files/serviceInstall.js",
     "service:uninstall": "node ./service_app/service_files/serviceUninstall.js"
   },
-  "name": "control-pc-power-settings",
+  "name": "webhook-pc-power-controls",
+  "productName": "Webhook PC Power Controls",
   "version": "1.0.0",
   "main": "./service_gui/main.js",
   "repository": {
