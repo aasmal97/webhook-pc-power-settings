@@ -1,5 +1,5 @@
 const { stringify } = require("envfile");
-const fs = require("fs");
+const fs = require("fs/promises");
 const dotenv = require("dotenv");
 const localtunnel = require("localtunnel");
 const { parsed: configFile } = dotenv.config({ path: "../config.env" });
@@ -7,6 +7,7 @@ const { v4: uuid } = require("uuid");
 const publicSubDomain = `pc-power-settings-${
   process.env.CUSTOM_SUB_DOMAIN ? process.env.CUSTOM_SUB_DOMAIN : uuid()
 }`;
+const configPath = "../config.env";
 //expose port
 const createLocalTunnel = async () => {
   let tunnel = await localtunnel({
@@ -18,12 +19,12 @@ const createLocalTunnel = async () => {
   let url = tunnel.url;
   //generates a url with a uuid instead
   if (url !== publicSubDomain) {
-    tunnel.close()
+    tunnel.close();
     tunnel = await localtunnel({
       port: process.env.PORT ? process.env.PORT : 5000,
       subdomain: `pc-power-settings-${uuid()}`,
     });
-    url = tunnel.url
+    url = tunnel.url;
   }
   console.log(url);
   //extract all variables
@@ -33,10 +34,9 @@ const createLocalTunnel = async () => {
   all_config_env["PUBLIC_CALLBACK_URL"] = url;
   const new_config_data = stringify(all_config_env);
   //output new config file
-  fs.writeFileSync("../config.env", new_config_data);
+  await fs.writeFile(configPath, new_config_data);
   tunnel.on("close", () => {
     // tunnels are closed
   });
-  
 };
-module.exports = createLocalTunnel
+module.exports = createLocalTunnel;

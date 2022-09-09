@@ -16,7 +16,7 @@ const submitConfig = (event) => {
 const showCurrPassword = () => {
   ipcRenderer.send("showCurrPassword");
 };
-ipcRenderer.on("showCurrPassword", (event, data) => {
+ipcRenderer.on("recieveCurrPassword", (event, data) => {
   document.getElementById("current-password").textContent = data;
 });
 ipcRenderer.on("recievePassword", (event, data) => {
@@ -40,7 +40,8 @@ ipcRenderer.on("recieveDomainName", (event, data) => {
 });
 ipcRenderer.on("submitConfigRecieved", (event, data) => {
   document.getElementById("current-port-input").textContent = data.PORT;
-  document.getElementById("public-callback-url").textContent = data.PASSWORD;
+  document.getElementById("public-callback-url").textContent =
+    data.PUBLIC_CALLBACK_URL;
   document.getElementById("current-custom-sub-domain").textContent =
     data.CUSTOM_SUB_DOMAIN;
 });
