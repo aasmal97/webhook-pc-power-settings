@@ -4,8 +4,6 @@ const addFormInputs = (data) => {
   document.getElementById("current-port-input").textContent = data.PORT;
   document.getElementById("public-callback-url").textContent =
     data.PUBLIC_CALLBACK_URL;
-  document.getElementById("current-custom-sub-domain").textContent =
-    data.CUSTOM_SUB_DOMAIN;
 };
 const generatePassword = () => {
   ipcRenderer.send("generatePassword");
@@ -82,7 +80,7 @@ ipcRenderer.on("submitConfigRecieved", (event, data) => {
   addFormInputs(data);
 });
 ipcRenderer.on("onLoad", (event, data) => {
-  if (data.CUSTOM_SUB_DOMAIN && data.PUBLIC_CALLBACK_URL && data.PORT) {
+  if (data.PUBLIC_CALLBACK_URL && data.PORT) {
     //reveal current settings
     addFormInputs(data);
   }
