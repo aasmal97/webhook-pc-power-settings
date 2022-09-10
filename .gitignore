@@ -6,3 +6,4 @@ wininstaller
 daemon
 index.css.map
 build
+out/
