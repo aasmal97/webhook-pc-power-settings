@@ -1,19 +1,28 @@
 const express = require("express");
 const cors = require("cors");
 const path = require("path");
-const dotenv = require("dotenv");
-const fs = require("fs");
 const createLocalTunnel = require(path.join(__dirname, "generateLocalTunnel"));
 const postRoute = require(path.join(__dirname, "routes/post"));
-const configPath = path.join(__dirname, "..", "config.env");
+const readConfigFile = require(path.join(
+  __dirname,
+  "..",
+  "modifyFiles/readConfigFile"
+));
+// const readConfigFile = require(path.join(
+//   __dirname,
+//   "../modifyFiles/readConfigFile.js"
+// ));
+// const createLocalTunnel = require("./generateLocalTunnel.js");
+// const postRoute = require("./routes/post.js");
+// const readConfigFile = require("../modifyFiles/readConfigFile.js");
+const configPath = path.join(__dirname, "../config.txt");
+
 const app = express();
-fs.writeFileSync(`${__dirname}/server.txt`, "hello");
 const startServer = async () => {
   //parses environment variables
-  fs.writeFileSync(`${__dirname}/server.txt`, "hello app");
-  dotenv.config({ path: configPath });
+  const configFile = await readConfigFile(configPath);
   //create local tunnel
-  await createLocalTunnel();
+  const url = await createLocalTunnel();
 
   //support all orgins
   const corsOptions = {
@@ -28,16 +37,16 @@ const startServer = async () => {
   //set up routes
   app.use("/", postRoute);
   //listen to port
-  const listener = app.listen(
-    process.env.PORT ? process.env.PORT : 5000,
-    () => {
-      console.log("server running on port " + listener.address().port);
-    }
-  );
+  const listener = app.listen(configFile.PORT ? configFile.PORT : 5000, () => {
+    console.log(
+      "server running on port " +
+        listener.address().port +
+        ` and public callback is ${url}`
+    );
+  });
 };
 //run script through node
 if (typeof require !== "undefined" && require.main === module) {
   startServer();
 }
 module.exports = startServer;
-//    //"build:gui": "npm exec electron-forge . --executable-name webhook_pc_power_controls --electron-version 20.1.2 --no-prune --arch x64"

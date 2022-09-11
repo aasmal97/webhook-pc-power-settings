@@ -1,11 +1,11 @@
 const { app, BrowserWindow, ipcMain, shell } = require("electron");
 const generator = require("generate-password");
-const { stringify } = require("envfile");
 const { v4: uuid } = require("uuid");
-const dotenv = require("dotenv");
 const path = require("path");
-const configPath = path.join(__dirname, "..", "config.env");
+const configPath = path.join(__dirname, "../config.txt");
 const fs = require("fs/promises");
+const writeConfigFile = require("../modifyFiles/writeConfigFile");
+const readConfigFile = require("../modifyFiles/readConfigFile");
 const serviceInstall = require(path.join(
   __dirname,
   "..",
@@ -46,8 +46,8 @@ ipcMain.on("generatePassword", (event, data) => {
   win.webContents.send("recievePassword", randomPassword);
 });
 ipcMain.on("showPassword", () => win.webContents.send("showPassword"));
-ipcMain.on("showCurrPassword", () => {
-  const { parsed: configFile } = dotenv.config({ path: configPath });
+ipcMain.on("showCurrPassword", async () => {
+  const configFile = await readConfigFile(configPath);
   win.webContents.send("recieveCurrPassword", configFile.PASSWORD);
 });
 ipcMain.on("generateDomainName", () => {
@@ -64,8 +64,8 @@ ipcMain.on("submitConfig", async (event, data) => {
   };
   //write to config file
   try {
-    await fs.writeFile(configPath, stringify(newData));
-    console.log("Config File Written to User Input");
+    const data = await writeConfigFile(configPath, newData);
+    console.log("Config File Written to User Input", `data: ${data}`);
   } catch (e) {
     console.error(e);
   }
@@ -75,8 +75,8 @@ ipcMain.on("submitConfig", async (event, data) => {
     serviceInstall(() => {
       //send data to renderer
       //time to start server and modify config
-      const sendEvent = setInterval(() => {
-        const { parsed: configFile } = dotenv.config({ path: configPath });
+      const sendEvent = setInterval(async () => {
+        const configFile = await readConfigFile(configPath);
         if (configFile.PUBLIC_CALLBACK_URL) {
           win.webContents.send("submitConfigRecieved", configFile);
           //stop polling for changes
@@ -86,8 +86,8 @@ ipcMain.on("submitConfig", async (event, data) => {
     });
   });
 });
-ipcMain.on("onLoad", () => {
-  const { parsed: configFile } = dotenv.config({ path: configPath });
+ipcMain.on("onLoad", async () => {
+  const configFile = await readConfigFile(configPath);
   win.webContents.send("onLoad", {
     ...configFile,
     currDirectory: path.join(__dirname, ".."),
