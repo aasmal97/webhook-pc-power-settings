@@ -1,9 +1,5 @@
 const { ipcRenderer } = require("electron");
-const addFormInputs = (data) => {
-  document.getElementById("curr-config-variables").style = "";
-  document.getElementById("current-port-input").textContent = data.PORT;
-  document.getElementById("public-callback-url").textContent =
-    data.PUBLIC_CALLBACK_URL;
+const hideLoadingIcon = () => {
   const loadingIcon = document.getElementById("loading-icon");
   loadingIcon.style = "display:none";
 };
@@ -11,6 +7,14 @@ const createLoadingIcon = () => {
   const loadingIcon = document.getElementById("loading-icon");
   loadingIcon.style = "";
 };
+const addFormInputs = (data) => {
+  document.getElementById("curr-config-variables").style = "";
+  document.getElementById("current-port-input").textContent = data.PORT;
+  document.getElementById("public-callback-url").textContent =
+    data.PUBLIC_CALLBACK_URL;
+  hideLoadingIcon();
+};
+
 const generatePassword = () => {
   ipcRenderer.send("generatePassword");
 };
@@ -34,6 +38,7 @@ const onLoad = () => {
   createLoadingIcon();
 };
 const uninstall = () => {
+  createLoadingIcon();
   ipcRenderer.send("uninstall");
 };
 const clickLink = (event) => {
@@ -97,6 +102,5 @@ ipcRenderer.on("onLoad", (event, data) => {
   const link = uninstallFooter.querySelector("a");
   link.textContent = `Directory: '${data.currDirectory}'`;
   link.href = `file://${data.currDirectory.replaceAll("\\", "/")}`;
-  const loadingIcon = document.getElementById("loading-icon");
-  loadingIcon.style = "display:none";
+  hideLoadingIcon();
 });

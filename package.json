@@ -19,13 +19,14 @@
     "nodemon": "=2.0.19"
   },
   "build": {
+    "asar": false,
     "appId": "webhook-pc-power-controls",
     "win": {
       "target": "nsis",
       "requestedExecutionLevel": "requireAdministrator"
     },
     "nsis": {
-      "guid": "26763198-2b5a-43d2-8058-a15b0979316b",
+      "guid": "3e48272d-4a7b-49a6-b24a-436ca8884af3",
       "oneClick": true,
       "perMachine": true
     }
