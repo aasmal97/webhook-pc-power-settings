@@ -15,7 +15,20 @@
     "@electron-forge/maker-squirrel": "^6.0.0-beta.66",
     "@electron-forge/maker-zip": "^6.0.0-beta.66",
     "electron": "=20.0.0",
+    "electron-builder": "^23.3.3",
     "nodemon": "=2.0.19"
+  },
+  "build": {
+    "appId": "webhook-pc-power-controls",
+    "win": {
+      "target": "nsis",
+      "requestedExecutionLevel": "requireAdministrator"
+    },
+    "nsis": {
+      "guid": "26763198-2b5a-43d2-8058-a15b0979316b",
+      "oneClick": true,
+      "perMachine": true
+    }
   },
   "scripts": {
     "dev": "nodemon service_app/index.js",
@@ -24,7 +37,8 @@
     "service:install": "node ./service_app/service_files/serviceInstall.js",
     "service:uninstall": "node ./service_app/service_files/serviceUninstall.js",
     "package": "electron-forge package",
-    "make": "electron-forge make"
+    "make": "electron-forge make",
+    "dist": "electron-builder"
   },
   "name": "webhook-pc-power-controls",
   "productName": "Webhook-PC-Power-Controls",
