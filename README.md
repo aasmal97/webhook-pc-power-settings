@@ -17,17 +17,17 @@ This Node.js application runs as a [windows service](https://docs.microsoft.com/
 ## Installation
 - [Install With GUI(Graphic User Interface)]()
 - [Install Without GUI](./installWithoutGui/README.md)
-## Environment Variables
-  - `PORT`: `number` (**required**)
+## Configuration Variables
+  - `PORT`=`number` (**required**)
   
      This should be an accepted port value between 1024 to 49151, to prevent port duplication
       
-  - `PASSWORD`: `string` (**required**)
+  - `PASSWORD`=`string` (**required**)
   
      This must configured, since this service will supply a public-facing url, that anyone in the internet may call. 
      - To prevent unwanted access, ensure this [password is strong](https://support.microsoft.com/en-us/windows/create-and-use-strong-passwords-c5cebb49-8c53-4f5e-2bc4-fe357ca048eb).
      - Consider using a [password generator](https://www.lastpass.com/features/password-generator-a#generatorTool)
-  - `CUSTOM_SUB_DOMAIN`: `string` (**optional**)
+  - `CUSTOM_SUB_DOMAIN`=`string` (**optional**)
       
       This allows the user to define an optional subdomain name. 
       - You are not guaranteed to be given your custom name, as it depends on availability 
@@ -41,8 +41,18 @@ This Node.js application runs as a [windows service](https://docs.microsoft.com/
 ## JSON Payload
 - `password`: `string` (**required**)
     
-    - This should be the same string you have in your [`config.env`](#environment-variables) file when you first installed the service.
+    - This should be the same string you have in your [`config.env`](#configuration-variables) file when you first installed the service.
 
 - `action`: `sleep | logout | shutdown` (**required**)
     
     - The action the windows service should initate on the machine
+
+## Limitations using the GUI
+#### Issue: 
+Right now, after this electron app is packaged for distribution, the .exe file created by `electron-forge`, is not compatible with [`node-windows`](https://www.npmjs.com/package/node-windows), and when the [serviceInstall]("./service_app/serviceInstall.js) runs, `node-windows` fails to start it's own generated windows service `.exe` file. This occurs because using `electron forge's` generated `.exe`, to run the windows service `.exe` results in improper path mappings, causing the windows service script to fail, and stop. 
+
+#### Solution:
+To circumvent this issue, we use [`node-windows`](https://www.npmjs.com/package/node-windows) execPath parameter to use our own custom `node.exe`, to run the windows service's `.exe`. This results in proper path mappings, and a successful initiation of a our windows service
+
+#### Caveat
+Since we use our own custom `node.exe` file, the package size for this app is greatly increased, if you need to use the GUI (The `node.exe` file is ~60mb) As a result, if you really want a slimmer app, you should run the [app without the GUI](./installWithoutGui/README.md). Note, that if you want to do this, you will need a good understanding of your terminal, and [node.js](https://nodejs.org/en/)

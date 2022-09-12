@@ -14,13 +14,13 @@
 
 2. Install all dependencies by running `npm install` in your terminal
 
-3. Create a `config.env` file in the root of the directory, and add the accepted [environment variables](../README.md/#environment-variables)
+3. Create a `config.txt` file in the root of the directory, and add the accepted [#configuration-variables](../README.md/#configuration-variables)
 
 ## Installation
 
 1. Run `npm run service:install` in your terminal, to install the windows service worker
 
-2. Open your `config.env` file again. The `PUBLIC_CALLBACK_URL` value is the url you should make post requests to. 
+2. Open your `config.txt` file again. The `PUBLIC_CALLBACK_URL` value is the url you should make post requests to. 
 ## Uninstall Application
 To uninstall, run `npm run service:uninstall` in your terminal 
 
