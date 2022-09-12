@@ -1,27 +1,6 @@
-const { exec, execSync } = require("child_process");
-const { exec: pkgExec } = require("pkg");
-const fs = require("fs/promises");
 const oldfs = require("fs");
 const path = require("path");
 const Service = require("node-windows").Service;
-const nssmInstall = async (serviceName, scriptPath, callback) => {
-  //create executable file of node server
-  await pkgExec([scriptPath, "--out-path", "./service_app"]);
-  //create windows service
-  const buffer = execSync(`nssm.exe install ${serviceName} index-win.exe`, {
-    cwd: __dirname,
-  });
-  //write install logs
-  fs.writeFile(
-    path.join(__dirname, "./serviceInstallLogs.txt"),
-    buffer.toString("utf-8")
-  );
-  //start service
-  exec(`nssm.exe start ${serviceName}`, {
-    cwd: __dirname,
-  });
-  if (callback) callback();
-};
 const nodeWindowsInstall = (serviceName, scriptPath, callback) => {
   let execPath;
   //determine execPath based on node.exe location

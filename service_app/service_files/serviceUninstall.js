@@ -1,18 +1,5 @@
-const { execSync } = require("child_process");
-const fs = require("fs/promises");
 const path = require("path");
 const Service = require("node-windows").Service;
-const nssmUninstall = (serviceName, callback) => {
-  const buffer = execSync(`nssm.exe remove ${serviceName} confirm`, {
-    cwd: __dirname,
-  });
-  //write log files
-  fs.writeFile(
-    path.join(__dirname, "./serviceUninstallLogs.txt"),
-    buffer.toString()
-  );
-  if (callback) callback();
-};
 const nodeWindowsUninstall = (serviceName, scriptPath, callback) => {
   const svc = new Service({
     name: serviceName,
