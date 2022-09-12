@@ -11,14 +11,6 @@ const writeConfigFile = require(path.join(
   "..",
   "modifyFiles/writeConfigFile"
 ));
-// const readConfigFile = require(path.join(
-//   __dirname,
-//   "../modifyFiles/readConfigFile.js"
-// ));
-// const writeConfigFile = require(path.join(
-//   __dirname,
-//   "../modifyFiles/writeConfigFile.js"
-// ));
 const configPath = path.join(__dirname, "../config.txt");
 //expose port
 const createLocalTunnel = async () => {
