@@ -4,6 +4,12 @@ const addFormInputs = (data) => {
   document.getElementById("current-port-input").textContent = data.PORT;
   document.getElementById("public-callback-url").textContent =
     data.PUBLIC_CALLBACK_URL;
+  const loadingIcon = document.getElementById("loading-icon");
+  loadingIcon.style = "display:none";
+};
+const createLoadingIcon = () => {
+  const loadingIcon = document.getElementById("loading-icon");
+  loadingIcon.style = "";
 };
 const generatePassword = () => {
   ipcRenderer.send("generatePassword");
@@ -17,6 +23,7 @@ const generateDomainName = () => {
 const submitConfig = (event) => {
   event.preventDefault();
   const data = new FormData(event.target);
+  createLoadingIcon();
   ipcRenderer.send("submitConfig", [...data.entries()]);
 };
 const showCurrPassword = () => {
@@ -24,6 +31,7 @@ const showCurrPassword = () => {
 };
 const onLoad = () => {
   ipcRenderer.send("onLoad");
+  createLoadingIcon();
 };
 const uninstall = () => {
   ipcRenderer.send("uninstall");
@@ -89,4 +97,6 @@ ipcRenderer.on("onLoad", (event, data) => {
   const link = uninstallFooter.querySelector("a");
   link.textContent = `Directory: '${data.currDirectory}'`;
   link.href = `file://${data.currDirectory.replaceAll("\\", "/")}`;
+  const loadingIcon = document.getElementById("loading-icon");
+  loadingIcon.style = "display:none";
 });
