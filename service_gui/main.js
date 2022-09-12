@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain, shell } = require("electron");
+const { app, BrowserWindow, ipcMain, shell, dialog } = require("electron");
 const generator = require("generate-password");
 const { v4: uuid } = require("uuid");
 const path = require("path");
@@ -6,6 +6,7 @@ const configPath = path.join(__dirname, "../config.txt");
 const fs = require("fs/promises");
 const writeConfigFile = require("../modifyFiles/writeConfigFile");
 const readConfigFile = require("../modifyFiles/readConfigFile");
+
 const serviceInstall = require(path.join(
   __dirname,
   "..",
@@ -97,9 +98,23 @@ ipcMain.on("uninstall", () => {
   serviceUninstall(async () => {
     try {
       await fs.unlink(configPath);
+      const btnClicked = dialog.showMessageBoxSync({
+        title: "Finish Uninstall",
+        message: `To finish deleting app data, go to your Control Panel`,
+        buttons: ["Control Panel", "Cancel"],
+      });
+      if (btnClicked === 0)
+        await shell.openPath("C:/Windows/system32/control.exe");
       app.quit();
     } catch (e) {
       console.log("Config file was already deleted");
+      const btnClicked = dialog.showMessageBoxSync({
+        title: "Finish Uninstall",
+        message: `To finish deleting app data, go to your Control Panel`,
+        buttons: ["Control Panel", "Cancel"],
+      });
+      if (btnClicked === 0)
+        await shell.openPath("C:/Windows/system32/control.exe");
       app.quit();
     }
   });

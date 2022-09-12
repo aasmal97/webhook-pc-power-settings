@@ -100,7 +100,9 @@ ipcRenderer.on("onLoad", (event, data) => {
   const uninstallFooter = document.getElementById("uninstall-footnote");
   //update current directory
   const link = uninstallFooter.querySelector("a");
-  link.textContent = `Directory: '${data.currDirectory}'`;
-  link.href = `file://${data.currDirectory.replaceAll("\\", "/")}`;
+    link.href = "file:///C:/Windows/system32/control.exe";
+    link.textContent = "Control Panel"
+  //link.textContent = `Directory: '${data.currDirectory}'`;
+  //link.href = `file://${data.currDirectory.replaceAll("\\", "/")}`;
   hideLoadingIcon();
 });
