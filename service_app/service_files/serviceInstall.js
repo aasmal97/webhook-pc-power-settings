@@ -21,7 +21,7 @@ const nodeWindowsInstall = (serviceName, scriptPath, callback) => {
     description:
       "Control sleep, logout or shutdown with using a web server to respond to webhooks",
     script: scriptPath,
-    maxRestarts: 1,
+    maxRestarts: 10,
     execPath: execPath,
   });
   svc.on("install", function () {
