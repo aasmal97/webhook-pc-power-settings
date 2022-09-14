@@ -81,8 +81,8 @@ This app is **NOT** designed to turn **ON** a PC as this requires
 2. Another device (like a phone or another computer), to initate a command to send a magic packet.
 
 Additionally, other existing apps used in combination do this job extremely well.
-    -  [Wake-On-Lan](https://play.google.com/store/apps/details?id=co.uk.mrwebb.wakeonlan&hl=en_US&gl=US) or [Wake Me Up](https://apps.apple.com/us/app/wake-me-up-wake-on-lan/id1465416032) to send magic packets
-    -  [Tasker](https://play.google.com/store/apps/details?id=net.dinglisch.android.taskerm&hl=en_US&gl=US) for Andriod, or [Communication Taskers](https://support.apple.com/guide/shortcuts/communication-triggers-apdd711f9dff/ios) for iPhones, that trigger a workflow that runs wake on lan, based off SMS messages.
+    -  [Wake-On-Lan](https://play.google.com/store/apps/details?id=co.uk.mrwebb.wakeonlan&hl=en_US&gl=US) for Andriod or [Wake Me Up](https://apps.apple.com/us/app/wake-me-up-wake-on-lan/id1465416032) for iPhones, to send magic packets
+    -  [Tasker](https://play.google.com/store/apps/details?id=net.dinglisch.android.taskerm&hl=en_US&gl=US) for Andriod, or [Communication Triggers](https://support.apple.com/guide/shortcuts/communication-triggers-apdd711f9dff/ios) for iPhones, that trigger a workflow that runs wake on lan, based off SMS messages.
 
 #### Example Flow for Turning On a PC:
 
