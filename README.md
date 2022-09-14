@@ -55,8 +55,8 @@ This Node.js application runs as a [windows service](https://docs.microsoft.com/
 
   - This should be the same string you have in your [`config.env`](#configuration-variables) file when you first installed the service.
 
-- `action`: `sleep | logout | shutdown` (**required**)
-  - The action the windows service should initate on the machine
+- `action`: `sleep | shutdown | restart | hibernate | logout` (**required**)
+  - The action the windows service should initate on the machine. Only one type is accepted.
 
 ## Limitations using the GUI
 
