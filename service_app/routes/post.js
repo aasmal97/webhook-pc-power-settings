@@ -1,4 +1,4 @@
-const { exec } = require("child_process");
+const { exec, execSync } = require("child_process");
 const path = require("path");
 const readConfigFile = require(path.join(
   __dirname,
@@ -24,16 +24,23 @@ router.route("/").post(async (req, res) => {
   res.send(responseStr);
   switch (body.action) {
     case "sleep":
+      execSync("powercfg -hibernate off");
       exec(
         "%windir%/System32/rundll32.exe powrprof.dll,SetSuspendState 0,1,0",
         commandErrHandler
       );
       return;
+    case "hibernate":
+      execSync("powercfg -hibernate on");
+      exec("%windir%/System32/shutdown.exe -h", commandErrHandler);
     case "logout":
       exec("%windir%/System32/shutdown.exe -l", commandErrHandler);
       return;
+    case "restart":
+      exec("%windir%/System32/shutdown.exe -r", commandErrHandler);
+      return;
     case "shutdown":
-      exec("%windir%/System32/shutdown.exe -s", commandErrHandler);
+      exec("%windir%/System32/shutdown.exe -s -hybrid", commandErrHandler);
       return;
     default:
       return;
