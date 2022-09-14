@@ -74,7 +74,7 @@ Since we use our own custom `node.exe` file, the package size for this app is gr
 
 ## Turning on Computer
 
-This app is not designed to turn **ON** a PC as this requires
+This app is **NOT** designed to turn **ON** a PC as this requires
 
 1. The use of [Wake-On-Lan](https://en.wikipedia.org/wiki/Wake-on-LAN) magic packets
    - For these to be sent, the PC must be connected to an ethernet cable
