@@ -21,13 +21,17 @@ const generatePassword = () => {
 const showPassword = () => {
   ipcRenderer.send("showPassword");
 };
+const checkPassword = (event) => {
+  const key = event.key;
+  if (key.includes('"') || key.includes("\\")) event.preventDefault();
+};
 const generateDomainName = () => {
   ipcRenderer.send("generateDomainName");
 };
 const submitConfig = (event) => {
   event.preventDefault();
   const data = new FormData(event.target);
-  createLoadingIcon();
+  //createLoadingIcon();
   ipcRenderer.send("submitConfig", [...data.entries()]);
 };
 const showCurrPassword = () => {
@@ -100,8 +104,8 @@ ipcRenderer.on("onLoad", (event, data) => {
   const uninstallFooter = document.getElementById("uninstall-footnote");
   //update current directory
   const link = uninstallFooter.querySelector("a");
-    link.href = "file:///C:/Windows/system32/control.exe";
-    link.textContent = "Control Panel"
+  link.href = "file:///C:/Windows/system32/control.exe";
+  link.textContent = "Control Panel";
   //link.textContent = `Directory: '${data.currDirectory}'`;
   //link.href = `file://${data.currDirectory.replaceAll("\\", "/")}`;
   hideLoadingIcon();

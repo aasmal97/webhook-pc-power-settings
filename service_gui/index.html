@@ -93,6 +93,8 @@
                 type="password"
                 required
                 minlength="1"
+                onkeypress="checkPassword(event)"
+                pattern='[^"\\\\]+'
               />
             </div>
             <button onclick="generatePassword()" type="button">

@@ -4,11 +4,12 @@ To solve one of the most pressing issues to ever exist, fueled by the joy of cre
 
 There are solutions that allow remote access to a Windows machine, like [Chrome’s Remote Desktop](https://remotedesktop.google.com) or [Window’s version](https://support.microsoft.com/en-us/windows/how-to-use-remote-desktop-5fe128d5-8fb1-7a23-3b8a-41e636865e8c), but they are complex to setup, and even then, additional configuration is required to allow them to react to a voice assistant. Unless someone has a good understanding of networking and technical administration, this can be a ton of work. If a user wants to control their machine from opening files to installing applications, then this complex setup should be done, and is the recommended approach.
 
-However, if a user just wants log out, shut down or put a machine to sleep, the same way we turn off lights with a voice command, this complex setup would be a waste of time. Therefore, this app was created.
-
+However, if a user just wants log out, shut down or put a machine to sleep, the same way we turn off lights with a voice command, this complex setup would be a waste of time. Therefore, this app was created. 
 ## How it works
 
-This Node.js application runs as a [windows service](https://docs.microsoft.com/en-us/dotnet/framework/windows-services/introduction-to-windows-service-applications) with the help of [`node-windows`](https://www.npmjs.com/package/node-windows). This service launches an [`express`](https://expressjs.com) web server that uses a public callback url supplied by [`localtunnel`](https://github.com/localtunnel/localtunnel), to respond to `POST` requests from anywhere on the web. This allows us to use [webhooks](https://en.wikipedia.org/wiki/Webhook), to initiate a logout, shutdown, or sleep action, by supplying a [valid json payload](#json-payload) in the post request.
+This Node.js application runs as a [windows service](https://docs.microsoft.com/en-us/dotnet/framework/windows-services/introduction-to-windows-service-applications) with the help of [`node-windows`](https://www.npmjs.com/package/node-windows). This is its key difference from other solutions like [Join](https://chrome.google.com/webstore/detail/join/flejfacjooompmliegamfbpjjdlhokhj?hl=en) or EventGhost, as they can only run while a user is logged in. However, a window service can always run, no matter who is signed in, or if the computer is locked. This is key, because the point of using a voice assistant is to not have to be near the computer. Therefore, if a computer has set their computer to log out or lock the computer after a period inactivity, they don't have to sign back in to initate power controls.
+
+This windows service launches an [`express`](https://expressjs.com) web server that uses a public callback url supplied by [`localtunnel`](https://github.com/localtunnel/localtunnel), to respond to `POST` requests from anywhere on the web. This allows us to use [webhooks](https://en.wikipedia.org/wiki/Webhook), to initiate a logout, shutdown, sleep, etc, action, by supplying a [valid json payload](#json-payload) in the post request.
 
 ## Example Automation using IFTTT
 
@@ -82,7 +83,7 @@ This app is **NOT** designed to turn **ON** a PC as this requires
 
 Additionally, other existing apps used in combination do this job extremely well.
     -  [Wake-On-Lan](https://play.google.com/store/apps/details?id=co.uk.mrwebb.wakeonlan&hl=en_US&gl=US) for Andriod or [Wake Me Up](https://apps.apple.com/us/app/wake-me-up-wake-on-lan/id1465416032) for iPhones, to send magic packets
-    -  [Tasker](https://play.google.com/store/apps/details?id=net.dinglisch.android.taskerm&hl=en_US&gl=US) for Andriod, or [Communication Triggers](https://support.apple.com/guide/shortcuts/communication-triggers-apdd711f9dff/ios) for iPhones, that trigger a workflow that runs wake on lan, based off SMS messages.
+    -  [Tasker](https://play.google.com/store/apps/details?id=net.dinglisch.android.taskerm&hl=en_US&gl=US) or [Automate](https://play.google.com/store/apps/details?id=com.llamalab.automate&hl=en_US&gl=US) for Andriod, or [Communication Triggers](https://support.apple.com/guide/shortcuts/communication-triggers-apdd711f9dff/ios) for iPhones, that trigger a workflow that runs wake on lan, based off SMS messages.
 
 #### Example Flow for Turning On a PC:
 

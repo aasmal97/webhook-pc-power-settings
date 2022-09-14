@@ -43,6 +43,7 @@ ipcMain.on("generatePassword", (event, data) => {
     numbers: true,
     lowercase: true,
     uppercase: true,
+    exclude: '"\\'
   });
   win.webContents.send("recievePassword", randomPassword);
 });
