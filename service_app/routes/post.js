@@ -1,9 +1,20 @@
 const { exec } = require("child_process");
+const path = require("path");
+const readConfigFile = require(path.join(
+  __dirname,
+  "..",
+  "..",
+  "modifyFiles/readConfigFile"
+));
 const express = require("express");
 const router = express.Router();
 router.route("/").post(async (req, res) => {
   const body = req.body;
-  if (body.password !== process.env.PASSWORD) return;
+  const configFile = await readConfigFile(
+    path.join(__dirname, "../../config.txt")
+  );
+  if (body.password !== configFile.PASSWORD)
+    return res.send("You are not authorized to access this machine");
   const commandErrHandler = (err, stdout, stderr) => {
     if (err) return console.log(`error: ${err.message}`);
     if (stderr) return console.log(`stderr: ${stderr}`);
@@ -29,4 +40,4 @@ router.route("/").post(async (req, res) => {
       return;
   }
 });
-module.exports = router
+module.exports = router;
