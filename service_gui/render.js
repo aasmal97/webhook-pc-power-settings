@@ -31,7 +31,7 @@ const generateDomainName = () => {
 const submitConfig = (event) => {
   event.preventDefault();
   const data = new FormData(event.target);
-  //createLoadingIcon();
+  createLoadingIcon();
   ipcRenderer.send("submitConfig", [...data.entries()]);
 };
 const showCurrPassword = () => {
