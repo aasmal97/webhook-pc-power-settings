@@ -33,7 +33,6 @@ router.route("/").post(async (req, res) => {
       exec("%windir%/System32/shutdown.exe -l", commandErrHandler);
       return;
     case "shutdown":
-      listener.close();
       exec("%windir%/System32/shutdown.exe -s", commandErrHandler);
       return;
     default:
