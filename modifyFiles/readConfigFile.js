@@ -9,7 +9,7 @@ const readConfigFile = async (configPath) => {
     let currKey = "";
     for (let i in options) {
       if (i % 2 === 0) currKey = options[i];
-      else objectOptions[currKey] = options[i];
+      else objectOptions[currKey] = options[i].replace("\r", '');
     }
     return objectOptions;
   } catch (e) {
