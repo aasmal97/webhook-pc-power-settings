@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "commonjs",
+    "outDir": "./build",
+    "strict": true,
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "sourceMap": true,
+    "lib": ["es2022","dom", "dom.iterable"]
+  },
+  "ts-node": {
+    "compilerOptions": {
+      "module": "commonjs",
+    },
+  },
+  "include": ["src/**/*.ts", "packageScripts/**/*.ts"],
+  "exclude": ["node_modules"]
+}

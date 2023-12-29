@@ -7,14 +7,13 @@ There are solutions that allow remote access to a Windows machine, like [Chromeâ
 However, if a user just wants log out, shut down or put a machine to sleep, the same way we turn off lights with a voice command, this complex setup would be a waste of time. Therefore, this app was created. 
 ## How it works
 
-This Node.js application runs as a [windows service](https://docs.microsoft.com/en-us/dotnet/framework/windows-services/introduction-to-windows-service-applications) with the help of [`node-windows`](https://www.npmjs.com/package/node-windows). This is its key difference from other solutions like [Join](https://chrome.google.com/webstore/detail/join/flejfacjooompmliegamfbpjjdlhokhj?hl=en) or EventGhost, as they can only run while a user is logged in. However, a window service can always run, no matter who is signed in, or if the computer is locked. This is key, because the point of using a voice assistant is to not have to be near the computer. Therefore, if a computer has set their computer to log out or lock the computer after a period inactivity, they don't have to sign back in to initate power controls.
+This Node.js application runs as a [windows service](https://docs.microsoft.com/en-us/dotnet/framework/windows-services/introduction-to-windows-service-applications) with the help of [`node-windows`](https://www.npmjs.com/package/node-windows). This is its key difference from other solutions like [Join](https://chrome.google.com/webstore/detail/join/flejfacjooompmliegamfbpjjdlhokhj?hl=en) or EventGhost, as they can only run while a user active, and logged in. However, a window service can always be running, no matter who is signed in, or if the computer is locked. Therefore, if a computer has set their computer to lock the computer after a period inactivity, they don't have to sign back in to initate power controls.
 
 This windows service launches an [`express`](https://expressjs.com) web server that uses a public callback url supplied by [`localtunnel`](https://github.com/localtunnel/localtunnel), to respond to `POST` requests from anywhere on the web. This allows us to use [webhooks](https://en.wikipedia.org/wiki/Webhook), to initiate a logout, shutdown, sleep, etc, action, by supplying a [valid json payload](#json-payload) in the post request.
 
 ## Example Automation using IFTTT
 
 #### Helpful Resources for this type of automation:
-
 - Create an [IFTTT Applet](https://help.ifttt.com/hc/en-us/articles/115010361348-What-is-an-Applet-)
 - Link [IFTTT and Google Assistant](https://support.google.com/googlenest/answer/7194656?hl=en&co=GENIE.Platform%3DDesktop&oco=1)
 

@@ -1,20 +1,22 @@
-const fs = require("fs/promises");
-const readConfigFile = async (configPath) => {
+import fs from "fs/promises";
+export const readConfigFile = async (configPath: string) => {
   try {
     const lines = await fs.readFile(configPath, {
       encoding: "utf-8",
     });
     const options = lines.split(/[=(\n)]/);
-    const objectOptions = {};
+    const objectOptions: {
+      [key: string]: string;
+    } = {};
     let currKey = "";
     for (let i in options) {
-      if (i % 2 === 0) currKey = options[i];
-      else objectOptions[currKey] = options[i].replace("\r", '');
+      if (parseFloat(i) % 2 === 0) currKey = options[i];
+      else objectOptions[currKey] = options[i].replace("\r", "");
     }
     return objectOptions;
   } catch (e) {
-    console.error(e)
-    console.trace()
+    console.error(e);
+    console.trace();
     return {};
   }
 };
@@ -22,4 +24,3 @@ const readConfigFile = async (configPath) => {
 if (typeof require !== "undefined" && require.main === module) {
   readConfigFile("config.txt");
 }
-module.exports = readConfigFile;

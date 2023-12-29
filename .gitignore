@@ -7,6 +7,7 @@ daemon
 index.css.map
 build
 out/
+config.json
 config.txt
 node.exe
 Output
