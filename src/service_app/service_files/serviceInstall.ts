@@ -1,6 +1,6 @@
 import fs from "fs";
 import path from "path";
-import { downloadLatestNode } from "./downloadNode";
+import { downloadLatestNode } from "../utils/downloadNode";
 import { WindowsService } from "./windowsService";
 const nodeWindowsInstall = async (
   scriptPath: string,

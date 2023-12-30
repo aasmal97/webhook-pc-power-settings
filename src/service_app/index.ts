@@ -1,6 +1,6 @@
 import express from "express";
 import cors from "cors";
-import { createLocalTunnel } from "./generateLocalTunnel";
+import { createLocalTunnel } from "./utils/generateLocalTunnel";
 import configFile from "../config.json";
 import { router as postRoute } from "./routes/post";
 const app = express();

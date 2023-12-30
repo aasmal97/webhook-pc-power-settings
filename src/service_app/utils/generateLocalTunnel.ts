@@ -1,7 +1,7 @@
 import localtunnel from "localtunnel";
 import { v4 as uuid } from "uuid";
-import { writeConfigFile } from "../modifyFiles/writeConfigFile";
-import configFile from "../config.json";
+import { writeConfigFile } from "../../modifyFiles/writeConfigFile";
+import configFile from "../../config.json";
 const tryTunnel = async ({
   tunnel,
   subdomain,

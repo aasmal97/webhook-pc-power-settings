@@ -25,7 +25,7 @@ export class Main {
       },
     });
     //html
-    Main.win.loadFile(path.join(__dirname, "index.html"));
+    Main.win.loadFile(path.join(__dirname, "..", "public", "index.html"));
 
     Main.win.on("closed", Main.onClose);
   }
@@ -40,4 +40,3 @@ export class Main {
     Main.application.on("ready", Main.onReady);
   }
 }
-
