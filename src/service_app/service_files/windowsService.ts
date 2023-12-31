@@ -24,9 +24,14 @@ class WebhookWindowsService {
         }
         const scriptPath = instanceConfig.script as string;
         const svc = new Service({ ...instanceConfig, script: scriptPath });
+        const currService = this;
         svc.on("install", function () {
           svc.start();
           console.log("App install complete");
+        });
+        svc.on("alreadyinstalled", async function () {
+          const result = await currService.uninstall();
+          if (result) svc.install();
         });
         svc.on("start", function (stream) {
           console.log(`App script initiated: ${scriptPath}`);
