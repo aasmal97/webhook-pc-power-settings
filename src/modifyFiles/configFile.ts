@@ -12,7 +12,7 @@ type ConfigProps = {
 // };
 //this will be shared state. Any changes to this file will be reflected in the whole app.
 class Config {
-  currConfig: Partial<ConfigProps> = config;
+  currConfig: Partial<ConfigProps> = config || {};
   async setConfig(newProps: Partial<ConfigProps>) {
     const newConfig = {
       ...this.currConfig,
@@ -23,5 +23,5 @@ class Config {
     return newConfig;
   }
 }
-const configFile = new Config;
+const configFile = new Config();
 export default configFile;

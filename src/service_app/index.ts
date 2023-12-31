@@ -7,7 +7,6 @@ const app = express();
 export const startServer = async () => {
   //create local tunnel
   const url = await createLocalTunnel();
-
   //support all orgins
   const corsOptions = {
     origin: ["*"],
