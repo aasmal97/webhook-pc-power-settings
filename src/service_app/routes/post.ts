@@ -1,11 +1,11 @@
 import { exec, execSync, ExecException } from "child_process";
 import express from "express";
-import configFile from "../../config.json";
+import configFile from "../../modifyFiles/configFile";
 
 export const router = express.Router();
 router.route("/").post(async (req, res) => {
   const body = req.body;
-  if (body.password !== configFile.PASSWORD)
+  if (body.password !== configFile.currConfig.PASSWORD)
     return res.send("You are not authorized to access this machine");
   const commandErrHandler = (
     err: ExecException | null,

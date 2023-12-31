@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 import { createLocalTunnel } from "./utils/generateLocalTunnel";
-import configFile from "../config.json";
+import configFile from "../modifyFiles/configFile";
 import { router as postRoute } from "./routes/post";
 const app = express();
 export const startServer = async () => {
@@ -21,7 +21,7 @@ export const startServer = async () => {
   //set up routes
   app.use("/", postRoute);
   //listen to port
-  const listener = app.listen(configFile.PORT ? configFile.PORT : 5000, () => {
+  const listener = app.listen(configFile.currConfig.PORT ? configFile.currConfig.PORT : 5000, () => {
     const address = listener?.address();
     const port = typeof address === "object" ? address?.port || 5000 : 5000;
     console.log(

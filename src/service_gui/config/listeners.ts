@@ -1,8 +1,7 @@
 import generator from "generate-password";
 import { app, ipcMain, shell, dialog } from "electron";
 import path from "path";
-import { writeConfigFile } from "../../modifyFiles/writeConfigFile";
-import configFile from "../../config.json";
+import configFile from "../../modifyFiles/configFile";
 import { v4 as uuid } from "uuid";
 import { serviceInstall } from "../../service_app/service_files/serviceInstall";
 import { serviceUninstall } from "../../service_app/service_files/serviceUninstall";
@@ -21,7 +20,7 @@ export const initalizeListeners = () => {
     Main.win?.webContents.send("recievePassword", randomPassword);
   });
   ipcMain.on("showCurrPassword", async () => {
-    Main.win?.webContents.send("recieveCurrPassword", configFile.PASSWORD);
+    Main.win?.webContents.send("recieveCurrPassword", configFile.currConfig.PASSWORD);
   });
   ipcMain.on("generateDomainName", () => {
     const newName = uuid();
@@ -37,7 +36,7 @@ export const initalizeListeners = () => {
     };
     //write to config file
     try {
-      const data = await writeConfigFile(newData);
+      const data = await configFile.setConfig(newData);
       console.log("Config File Written to User Input", `data: ${data}`);
     } catch (e) {
       console.error(e);
@@ -47,8 +46,11 @@ export const initalizeListeners = () => {
     //send data to renderer
     //time to start server and modify config
     const sendEvent = setInterval(async () => {
-      if (configFile.PUBLIC_CALLBACK_URL) {
-        Main.win?.webContents.send("submitConfigRecieved", configFile);
+      if (configFile.currConfig.PUBLIC_CALLBACK_URL) {
+        Main.win?.webContents.send(
+          "submitConfigRecieved",
+          configFile.currConfig
+        );
         //stop polling for changes
         clearInterval(sendEvent);
       }
@@ -56,7 +58,7 @@ export const initalizeListeners = () => {
   });
   ipcMain.on("onLoad", async () => {
     Main.win?.webContents.send("onLoad", {
-      ...configFile,
+      ...configFile.currConfig,
       currDirectory: path.join(__dirname, ".."),
     });
   });
