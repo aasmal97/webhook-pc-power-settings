@@ -20,7 +20,6 @@ export const initalizeListeners = () => {
     });
     Main.win?.webContents.send("recievePassword", randomPassword);
   });
-  ipcMain.on("showPassword", () => Main.win?.webContents.send("showPassword"));
   ipcMain.on("showCurrPassword", async () => {
     Main.win?.webContents.send("recieveCurrPassword", configFile.PASSWORD);
   });

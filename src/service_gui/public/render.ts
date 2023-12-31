@@ -20,7 +20,19 @@ const generatePassword = () => {
   ipcRenderer.send("generatePassword");
 };
 const showPassword = () => {
-  ipcRenderer.send("showPassword");
+  const btn = document.getElementById("show-password-btn");
+  const passwordInput = document.getElementById(
+    "password-input"
+  ) as HTMLInputElement;
+  if (passwordInput?.type === "password") {
+    passwordInput.type = "text";
+    btn?.classList.remove("fa-eye");
+    btn?.classList.add("fa-eye-slash");
+  } else {
+    passwordInput.type = "password";
+    btn?.classList.remove("fa-eye-slash");
+    btn?.classList.add("fa-eye");
+  }
 };
 const checkPassword = (event: KeyboardEvent) => {
   const key = event.key;
@@ -83,21 +95,6 @@ ipcRenderer.on("recievePassword", (event, data) => {
     "password-input"
   ) as HTMLInputElement;
   if (passwordInput) passwordInput.value = data;
-});
-ipcRenderer.on("showPassword", () => {
-  const btn = document.getElementById("show-password-btn");
-  const passwordInput = document.getElementById(
-    "password-input"
-  ) as HTMLInputElement;
-  if (passwordInput?.type === "password") {
-    passwordInput.type = "text";
-    btn?.classList.remove("fa-eye");
-    btn?.classList.add("fa-eye-slash");
-  } else {
-    passwordInput.type = "password";
-    btn?.classList.remove("fa-eye-slash");
-    btn?.classList.add("fa-eye");
-  }
 });
 ipcRenderer.on("recieveDomainName", (event, data) => {
   const subdomainInput = document.getElementById(
