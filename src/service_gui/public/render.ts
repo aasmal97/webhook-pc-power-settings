@@ -16,7 +16,6 @@ const addFormInputs = (data: { [key: string]: string | number }) => {
     callbackUrlInput.textContent = data?.PUBLIC_CALLBACK_URL?.toString();
   hideLoadingIcon();
 };
-
 const generatePassword = () => {
   ipcRenderer.send("generatePassword");
 };

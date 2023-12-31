@@ -11,7 +11,7 @@ export const initalizeListeners = () => {
   //add listeners
   ipcMain.on("generatePassword", (event, data) => {
     const randomPassword = generator.generate({
-      length: 15,
+      length: 20,
       symbols: true,
       numbers: true,
       lowercase: true,

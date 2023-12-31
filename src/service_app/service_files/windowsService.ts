@@ -5,8 +5,7 @@ class WebhookWindowsService {
   constructor(options: Partial<ServiceConfig>) {
     this.serviceProps = options;
   }
-    doesServiceExist() {
-  }
+  doesServiceExist() {}
   install(
     config: Partial<ServiceConfig>,
     options?: {

@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "esnext",
+    "target": "es2018",
     "module": "commonjs",
     "outDir": "./build",
     "strict": true,
@@ -8,7 +8,7 @@
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "sourceMap": true,
-    "lib": ["es2022","dom", "dom.iterable"]
+    "lib": ["esnext","dom", "dom.iterable"]
   },
   "ts-node": {
     "compilerOptions": {

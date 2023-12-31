@@ -17,9 +17,11 @@ body {
     cursor: pointer;
   }
 }
+#new-config-variables{
+  height: 100%;
+}
 #new-config-variables,
 #curr-config-variables {
-  height: 100%;
   width: 45%;
   padding: 0 2.5%;
   h2 {
