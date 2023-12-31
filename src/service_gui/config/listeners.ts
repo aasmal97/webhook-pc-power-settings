@@ -20,7 +20,10 @@ export const initalizeListeners = () => {
     Main.win?.webContents.send("recievePassword", randomPassword);
   });
   ipcMain.on("showCurrPassword", async () => {
-    Main.win?.webContents.send("recieveCurrPassword", configFile.currConfig.PASSWORD);
+    Main.win?.webContents.send(
+      "recieveCurrPassword",
+      configFile.currConfig.PASSWORD
+    );
   });
   ipcMain.on("generateDomainName", () => {
     const newName = uuid();
@@ -34,6 +37,7 @@ export const initalizeListeners = () => {
         ([key, value]) => key === "custom-sub-domain"
       )[0][1],
     };
+    const domainChanged = !!newData.CUSTOM_SUB_DOMAIN;
     //write to config file
     try {
       const data = await configFile.setConfig(newData);
@@ -43,18 +47,22 @@ export const initalizeListeners = () => {
     }
     //start new service
     await serviceInstall();
-    //send data to renderer
-    //time to start server and modify config
-    const sendEvent = setInterval(async () => {
-      if (configFile.currConfig.PUBLIC_CALLBACK_URL) {
-        Main.win?.webContents.send(
-          "submitConfigRecieved",
-          configFile.currConfig
-        );
-        //stop polling for changes
-        clearInterval(sendEvent);
-      }
-    }, 2000);
+    //we poll for changes every 2 seconds
+    //since we don't really know when the service will start
+    configFile.pollConfig((interval, newConfig) => {
+      const expectedURL = `https://pc-power-settings-${newData.CUSTOM_SUB_DOMAIN}.loca.lt`;
+      const awaitPublicUrlChange =
+        domainChanged && newConfig.PUBLIC_CALLBACK_URL !== expectedURL;
+      console.log(
+        "polling changes",
+        newConfig,
+        awaitPublicUrlChange,
+        expectedURL
+      );
+      if (!newConfig.PUBLIC_CALLBACK_URL || awaitPublicUrlChange) return;
+      if (interval) clearInterval(interval);
+      Main.win?.webContents.send("submitConfigRecieved", newConfig);
+    });
   });
   ipcMain.on("onLoad", async () => {
     Main.win?.webContents.send("onLoad", {

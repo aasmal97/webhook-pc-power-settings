@@ -1,4 +1,5 @@
 import { Service, ServiceConfig } from "node-windows";
+import path from "path";
 class WebhookWindowsService {
   serviceProps: Partial<ServiceConfig>;
   currServiceInstance: Service | null = null;
@@ -17,11 +18,9 @@ class WebhookWindowsService {
           ...this.serviceProps,
           ...config,
         };
-        if (!("script" in instanceConfig)) {
-          console.error("script is required");
-          return reject(false);
-        }
-        const scriptPath = instanceConfig.script as string;
+        const scriptPath = path
+          .join(__dirname, "../index.js")
+          .replace(/\\/g, "\\\\");
         const svc = new Service({ ...instanceConfig, script: scriptPath });
         const currService = this;
         svc.on("install", function () {
@@ -29,13 +28,29 @@ class WebhookWindowsService {
           console.log("App install complete");
         });
         svc.on("alreadyinstalled", async function () {
+          //we set the current service as the current instance since we know it's installed
+          currService.currServiceInstance = svc;
           const result = await currService.uninstall();
-          if (result) svc.install();
+          //we know this is uninstalled, so we can re-try for resolution
+          try {
+            if (result) {
+              const retryResult = await currService.install(config, options);
+              resolve(retryResult);
+            } else {
+              console.error("Failed to re-install service");
+              reject(false);
+            }
+          } catch (err) {
+            console.error(err);
+            reject(false);
+          }
+        });
+        svc.on("invalidinstallation", function () {
+          console.log("Invalid installation");
         });
         svc.on("start", function (stream) {
-          console.log(`App script initiated: ${scriptPath}`);
-          resolve(true);
           if (options?.callback) options.callback();
+          resolve(true);
         });
         svc.on("stop", function (stream) {
           console.error(stream);
@@ -56,23 +71,23 @@ class WebhookWindowsService {
   uninstall(options?: { callback?: () => void }) {
     return new Promise<boolean>((resolve, reject) => {
       try {
-        if (!this.currServiceInstance) return;
+        if (!this.currServiceInstance) return resolve(true);
         const svc = this.currServiceInstance;
         const currServiceProps = this.serviceProps;
         svc.on("uninstall", function () {
           console.log(`${currServiceProps.name} uninstalled complete`);
-          resolve(true);
           if (options?.callback) options.callback();
+          resolve(true);
         });
         svc.on("alreadyuninstalled", function () {
           console.log("App is already uninstalled");
-          resolve(true);
           if (options?.callback) options.callback();
+          resolve(true);
         });
         svc.uninstall();
       } catch (err) {
         reject(false);
-        console.error(err);
+        console.error(err, "uninstall error");
       }
     });
   }

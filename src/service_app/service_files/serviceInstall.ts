@@ -1,30 +1,11 @@
-import fs from "fs";
-import path from "path";
-import { downloadLatestNode } from "../utils/downloadNode";
+import { determineExecPath } from "../utils/downloadNode";
 import { WindowsService } from "./windowsService";
-const nodeWindowsInstall = async (
-  scriptPath: string,
-  callback?: () => void
-) => {
-  let execPath: string | null;
-  //determine execPath based on node.exe location
-  //needed since node.exe  is needed inside this script's directory
-  // to package app for distribution
-  try {
-    if (!fs.existsSync(path.join(__dirname, "./node.exe"))) {
-      await downloadLatestNode();
-    }
-    execPath = path.join(__dirname, "./node.exe");
-  } catch (e) {
-    execPath = null;
-    console.log(
-      "Consider moving a copy of your node.exe into the service files directory. This will allow you to package this app for distrubtion."
-    );
-  }
+const nodeWindowsInstall = async (callback?: () => void) => {
+  const execPath = await determineExecPath();
   if (!execPath) return false;
   return await WindowsService.install(
     {
-      script: scriptPath,
+      execPath: execPath,
     },
     {
       callback: callback,
@@ -32,8 +13,7 @@ const nodeWindowsInstall = async (
   );
 };
 export const serviceInstall = async (callback?: () => void) => {
-  const scriptPath = path.join(__dirname, "../index.js").replace(/\\/g, "\\\\");
-  return await nodeWindowsInstall(scriptPath, callback);
+  return await nodeWindowsInstall(callback);
 };
 //run script through node
 if (typeof require !== "undefined" && require.main === module) {

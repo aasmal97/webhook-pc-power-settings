@@ -103,6 +103,7 @@ ipcRenderer.on("recieveDomainName", (event, data) => {
   if (subdomainInput) subdomainInput.value = data;
 });
 ipcRenderer.on("submitConfigRecieved", (event, data) => {
+  console.log("submitConfigRecieved", data);
   addFormInputs(data);
 });
 ipcRenderer.on("onLoad", (event, data) => {

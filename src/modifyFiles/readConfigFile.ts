@@ -1,17 +1,18 @@
 import fs from "fs/promises";
-export const readConfigFile = async (configPath: string) => {
+import path from "path";
+import { ConfigProps } from "./configFile";
+export const readConfigFile = async () => {
+  const configPath = path.join(__dirname, "../config.json");
   try {
     const lines = await fs.readFile(configPath, {
       encoding: "utf-8",
     });
-    const options = lines.split(/[=(\n)]/);
-    const objectOptions: {
-      [key: string]: string;
-    } = {};
-    let currKey = "";
-    for (let i in options) {
-      if (parseFloat(i) % 2 === 0) currKey = options[i];
-      else objectOptions[currKey] = options[i].replace("\r", "");
+    let objectOptions: Partial<ConfigProps> = {};
+    try {
+      objectOptions = JSON.parse(lines);
+    } catch (err) {
+      console.error(err, "error parsing config file");
+      console.trace();
     }
     return objectOptions;
   } catch (e) {
@@ -22,5 +23,7 @@ export const readConfigFile = async (configPath: string) => {
 };
 //run script through node
 if (typeof require !== "undefined" && require.main === module) {
-  readConfigFile("config.txt");
+  readConfigFile().then((res) => {
+    console.log(res);
+  });
 }
