@@ -3,6 +3,7 @@ import cors from "cors";
 import { createLocalTunnel } from "./utils/generateLocalTunnel";
 import configFile from "../modifyFiles/configFile";
 import { router as postRoute } from "./routes/post";
+import eventLog from "./utils/EventLogger";
 const app = express();
 export const startServer = async () => {
   //create local tunnel
@@ -20,13 +21,17 @@ export const startServer = async () => {
   //set up routes
   app.use("/", postRoute);
   //listen to port
-  const listener = app.listen(configFile.currConfig.PORT ? configFile.currConfig.PORT : 5000, () => {
-    const address = listener?.address();
-    const port = typeof address === "object" ? address?.port || 5000 : 5000;
-    console.log(
-      "server running on port " + port + ` and public callback is ${url}`
-    );
-  });
+  const listener = app.listen(
+    configFile.currConfig.PORT ? configFile.currConfig.PORT : 5000,
+    () => {
+      const address = listener?.address();
+      const port = typeof address === "object" ? address?.port || 5000 : 5000;
+      //write to event log
+      eventLog.info(
+        "server running on port " + port + ` and public callback is ${url.url}`
+      );
+    }
+  );
 };
 //run script through node
 if (typeof require !== "undefined" && require.main === module) {
