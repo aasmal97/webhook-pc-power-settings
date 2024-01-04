@@ -1,6 +1,7 @@
 import axios from "axios";
 import fs from "fs";
 import path from "path";
+export let execPath: string = path.join(__dirname, "node.exe");
 export const downloadLatestNode = async () => {
   //download node 21.5 currently tested to work
   const response = await axios.get(
@@ -25,7 +26,6 @@ export const downloadLatestNode = async () => {
   });
 };
 export const determineExecPath = async () => {
-  let execPath: string | null;
   //determine execPath based on node.exe location
   //needed since node.exe  is needed inside this script's directory
   // to package app for distribution
@@ -35,10 +35,10 @@ export const determineExecPath = async () => {
     }
     execPath = path.join(__dirname, "node.exe");
   } catch (e) {
-    execPath = null;
     console.log(
       "Consider moving a copy of your node.exe into the service files directory. This will allow you to package this app for distrubtion."
     );
+    return null;
   }
   return execPath;
 };

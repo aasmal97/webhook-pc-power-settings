@@ -1,27 +1,26 @@
 import { Service, ServiceConfig } from "node-windows";
 import path from "path";
+import { execPath } from "../utils/downloadNode";
 class WebhookWindowsService {
-  serviceProps: Partial<ServiceConfig>;
+  serviceProps: Partial<ServiceConfig> = {};
   currServiceInstance: Service | null = null;
-  constructor(options: Partial<ServiceConfig>) {
+  constructor(options: Partial<ServiceConfig> = {}) {
     this.serviceProps = options;
   }
-  install(
-    config: Partial<ServiceConfig>,
-    options?: {
-      callback?: () => void;
-    }
-  ) {
+  install(options?: { callback?: () => void }) {
     return new Promise<boolean>((resolve, reject) => {
       try {
         const instanceConfig = {
           ...this.serviceProps,
-          ...config,
         };
         const scriptPath = path
           .join(__dirname, "../index.js")
           .replace(/\\/g, "\\\\");
-        const svc = new Service({ ...instanceConfig, script: scriptPath });
+        const svc = new Service({
+          ...instanceConfig,
+          script: scriptPath,
+          execPath: execPath,
+        });
         const currService = this;
         svc.on("install", function () {
           svc.start();
@@ -34,7 +33,7 @@ class WebhookWindowsService {
           //we know this is uninstalled, so we can re-try for resolution
           try {
             if (result) {
-              const retryResult = await currService.install(config, options);
+              const retryResult = await currService.install(options);
               resolve(retryResult);
             } else {
               console.error("Failed to re-install service");

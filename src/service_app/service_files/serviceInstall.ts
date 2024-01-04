@@ -5,9 +5,6 @@ const nodeWindowsInstall = async (callback?: () => void) => {
   if (!execPath) return false;
   return await WindowsService.install(
     {
-      execPath: execPath,
-    },
-    {
       callback: callback,
     }
   );

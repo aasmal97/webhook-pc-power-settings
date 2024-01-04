@@ -1,7 +1,6 @@
 import { WindowsService } from "./windowsService";
-const nodeWindowsUninstall = WindowsService.uninstall;
 export const serviceUninstall = async () => {
-  return await nodeWindowsUninstall();
+  return await WindowsService.uninstall();
 };
 
 //run script through node
