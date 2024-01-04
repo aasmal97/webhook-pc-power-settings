@@ -2,8 +2,9 @@ import axios from "axios";
 import fs from "fs";
 import path from "path";
 export const downloadLatestNode = async () => {
+  //download node 21.5 currently tested to work
   const response = await axios.get(
-    "https://nodejs.org/dist/latest/win-x64/node.exe",
+    "https://nodejs.org/dist/v21.5.0/win-x64/node.exe",
     { responseType: "stream" }
   );
 
