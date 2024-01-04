@@ -1,5 +1,5 @@
 # Install With GUI
-1. Download the [app](https://drive.google.com/file/d/1cDfXWuljqcgZ_SopFDGNiivXTfgQaayy/view?usp=sharing)
+1. Download the [app]()
 2. Launch the app by clicking on Webhook PC Power Controls
 
 # Using the app

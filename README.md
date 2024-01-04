@@ -5,6 +5,7 @@ To solve one of the most pressing issues to ever exist, fueled by the joy of cre
 There are solutions that allow remote access to a Windows machine, like [Chrome’s Remote Desktop](https://remotedesktop.google.com) or [Window’s version](https://support.microsoft.com/en-us/windows/how-to-use-remote-desktop-5fe128d5-8fb1-7a23-3b8a-41e636865e8c), but they are complex to setup, and require additional configuration to allow them to react to a voice assistant. Unless someone has a good understanding of networking and technical administration, this can be a ton of work. If a user wants full control of their machine, then this complex setup should be done, and is the recommended approach.
 
 However, if a user just wants log out, shutdown or put a machine to sleep, the same way we turn off lights with a voice command, this complex setup would be a waste of time. Therefore, this app was created. 
+
 ## How it works
 
 This Node.js application runs as a [windows service](https://docs.microsoft.com/en-us/dotnet/framework/windows-services/introduction-to-windows-service-applications) with the help of [`node-windows`](https://www.npmjs.com/package/node-windows). This is the key difference from other solutions like [Join](https://chrome.google.com/webstore/detail/join/flejfacjooompmliegamfbpjjdlhokhj?hl=en), as they can only run while a user active, and logged in. However, a window service can always run, no matter who is signed in, or if the computer is locked. Therefore, if a user has set their computer to lock after a period inactivity, they don't have to sign back in to initate power controls.
@@ -21,8 +22,8 @@ This windows service launches an [`express`](https://expressjs.com) web server t
 
 ## Installation
 
-- [Install With GUI (Graphic User Interface)](./installWithGui/README.md)
-- [Install Without GUI](./installWithoutGui/README.md)
+- [Install With GUI (Graphic User Interface)](./install/withGui/README.md)
+- [Install Without GUI](./install/withoutGui/README.md)
 
 ## Configuration Variables
 
@@ -53,21 +54,11 @@ This windows service launches an [`express`](https://expressjs.com) web server t
 - `action`: `sleep | shutdown | restart | hibernate | logout` (**required**)
   - The action the windows service should initate on the machine. Only one type is accepted.
 
-## Limitations using the GUI
-
-#### Issue:
-
-Right now, after this electron app is packaged for distribution, the .exe file created by `electron-forge`, is not compatible with [`node-windows`](https://www.npmjs.com/package/node-windows), and when the [serviceInstall]("./service_app/serviceInstall.js) runs, `node-windows` fails to start it's own generated windows service `.exe` file. This occurs because using `electron forge's` generated `.exe`, to run the windows service `.exe` results in improper path mappings, causing the windows service script to fail, and stop.
-
-#### Solution:
-
-To circumvent this issue, we use [`node-windows`](https://www.npmjs.com/package/node-windows) execPath parameter to use our own custom `node.exe`, to run the windows service's `.exe`. This results in proper path mappings, and a successful initiation of a our windows service
-
 ## Turning a Computer on
 Implementing this requires:
 
 1. The use of [Wake-On-Lan](https://en.wikipedia.org/wiki/Wake-on-LAN)
-   - For this to work, the computer must be connected to your network, via an ethernet cable and your PC's motherboard/and or network card must support it. Most modern computers, in the last decade will support it
+   - Your computer must be connected to your network, via an ethernet cable, and your PC's motherboard/and or network card MUST support it. Most modern computers in the last decade do.
 2. Another device (like a phone, or another computer), that is always on and connected to the local network.
 3. Software on the other device, that will listen to a Cloud or SMS message, and trigger a Wake-On-Lan call. Below are some popular options:
     - [Automate](https://play.google.com/store/apps/details?id=com.llamalab.automate&hl=en_US&gl=US) (Andriod Only)
