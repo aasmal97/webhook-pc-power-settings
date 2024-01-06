@@ -82,7 +82,7 @@ Options:
     - With the method, similar to above, you can turn the PC off, but it may result in data corruption. This method can also cause stress on your PC components leading to hardware damage in the long-run, as the PC shuts off IMMEADITELY.
     - Note: Won't work for laptops as they have batteries. Therefore the battery would need to be removed, which defeats the purpose of a laptop.
 
-- If you can run an ethernet cable
+- If you can run an ethernet cable (Preferred, since it requires no extra hardware)
   1. The use of [Wake-On-Lan](https://en.wikipedia.org/wiki/Wake-on-LAN)
       - Your computer must be connected to your network, via ethernet, and your PC's motherboard/and or network card MUST support it. Most modern computers in the last decade do. 
   2. [Disable Power Management on your network adapter card](https://learn.microsoft.com/en-us/troubleshoot/windows-client/networking/power-management-on-network-adapter)
