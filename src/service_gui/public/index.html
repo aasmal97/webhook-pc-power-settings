@@ -6,7 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="index.css" />
     <title>WebHook PC Power Controls</title>
-    <script>exports={}</script>
+    <script>
+      exports = {};
+    </script>
     <script defer src="render.js"></script>
     <script
       defer
@@ -30,6 +32,10 @@
       </div>
     </div>
     <h1>Configure Webhook Power Controls</h1>
+    <div id="action-btns">
+      <button onclick="startService()">Start Service</button>
+      <button onclick="stopService()">Stop Service</button>
+    </div>
     <div id="forms-container">
       <div id="curr-config-variables" style="display: none">
         <h2>Current Config</h2>
@@ -132,7 +138,8 @@
         <p>
           Note: This will only remove your user data, all background processes,
           and the service worker. To completely erase all app files, after
-          clicking this button, uninstall the program through your control panel.
+          clicking this button, uninstall the program through your control
+          panel.
         </p>
         <a href="" onclick="clickLink(event)" aria-label="open-source-directory"
           >Control Panel</a

@@ -58,6 +58,12 @@ const uninstall = () => {
   createLoadingIcon();
   ipcRenderer.send("uninstall");
 };
+const stopService = () => {
+  ipcRenderer.send("stopService")
+}
+const startService = () => {
+  ipcRenderer.send("startService")
+}
 const clickLink = (event: Electron.Event) => {
   event.preventDefault();
   const target = event.target as HTMLAnchorElement;

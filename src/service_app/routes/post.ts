@@ -1,9 +1,10 @@
 import { exec, execSync, ExecException } from "child_process";
 import express from "express";
 import configFile from "../../modifyFiles/configFile";
-
+import eventLog from "../utils/EventLogger";
 export const router = express.Router();
 router.route("/").post(async (req, res) => {
+  eventLog.info("Validating HTTP request")
   const body = req.body;
   if (body.password !== configFile.currConfig.PASSWORD)
     return res.send("You are not authorized to access this machine");
@@ -17,6 +18,7 @@ router.route("/").post(async (req, res) => {
     console.log(stdout);
   };
   const responseStr = `Action ${body.action} initiated`;
+    eventLog.info("Initiating action " + body.action + " from HTTP request");
   res.send(responseStr);
   try {
     switch (body.action) {

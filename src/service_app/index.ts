@@ -7,6 +7,7 @@ import eventLog from "./utils/EventLogger";
 const app = express();
 export const startServer = async () => {
   //create local tunnel
+  eventLog.info("Creating Local Tunnel");
   const url = await createLocalTunnel();
   //support all orgins
   const corsOptions = {

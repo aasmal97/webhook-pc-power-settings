@@ -64,6 +64,14 @@ export const initalizeListeners = () => {
       Main.win?.webContents.send("submitConfigRecieved", newConfig);
     });
   });
+  ipcMain.on("startService", async () => {
+    //start new service
+    await serviceInstall();
+  });
+  ipcMain.on("stopService", async () => {
+    //stop service
+    await serviceUninstall();
+  })
   ipcMain.on("onLoad", async () => {
     Main.win?.webContents.send("onLoad", {
       ...configFile.currConfig,
